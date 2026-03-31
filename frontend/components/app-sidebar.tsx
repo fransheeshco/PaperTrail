@@ -20,12 +20,12 @@ import Link from "next/link"
 // Sidebar data
 const navMain = [
   {
-    title: "Getting Started",
+    title: "Home",
     items: [
-      { title: "Receipts", url: "/reciepts" },
       { title: "Dashboard", url: "/dashboard" },
-      { title: "Profile", url: "/profile" },
       { title: "Analytics", url: "/analytics" },
+      { title: "Receipts", url: "/reciepts" },
+      { title: "Profile", url: "/profile" },
     ],
   },
 ]
@@ -41,7 +41,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         {navMain.map((group) => (
           <SidebarGroup key={group.title}>
-            <SidebarGroupLabel className="text-2xl">{group.title}</SidebarGroupLabel>
+            <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {group.items.map((item) => (

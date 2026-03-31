@@ -1,5 +1,5 @@
-import ProfileHeader from "@/components/profile-page/components/profile-header"
-import ProfileContent from "@/components/profile-page/components/profile-content"
+import ProfileHeader from "./components/profile-header";
+import ProfileContent from "./components/profile-content";
 
 export default function Page() {
   return (

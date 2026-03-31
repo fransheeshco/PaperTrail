@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function PrivateLayout({ children }: { children: React.ReactNode }) {
-  // TODO: replace with real auth logic
   const supabase = await createClient();
   const { data, error } = await supabase.auth.getSession();
   
@@ -13,19 +12,29 @@ export default async function PrivateLayout({ children }: { children: React.Reac
   }
 
   return (
-    <SidebarProvider>
-      <div className="flex min-h-screen w-full">
-        <AppSidebar className="w-64" />
+    <SidebarProvider
+      className="min-h-screen"
+      style={
+        {
+          "--sidebar-width": "calc(var(--spacing) * 64)",
+          "--header-height": "calc(var(--spacing) * 12 + 1px)"
+        } as React.CSSProperties
+      }
+    >
+      <AppSidebar variant="sidebar" />
 
-        <SidebarInset className="flex-1 flex flex-col">
-          <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-            <SidebarTrigger className="-ml-1" />
-            {/* optional: breadcrumbs, header content */}
-          </header>
+      <SidebarInset className="flex flex-col flex-1">
+        {/* Header */}
+        <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b px-4">
+          <SidebarTrigger className="-ml-1" />
+          {/* You can re-add SiteHeader here if needed */}
+        </header>
 
-          <main className="flex-1 p-4">{children}</main>
-        </SidebarInset>
-      </div>
+        {/* Main Content */}
+        <main className="flex-1">
+          {children}
+        </main>
+      </SidebarInset>
     </SidebarProvider>
   )
 }
