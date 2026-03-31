@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
+import { login, signup } from "@/app/login/actions"
 
 export function LoginForm({
   className,
@@ -30,12 +31,14 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
+          {/* Note: We use a standard form tag that wraps the ShadCN components */}
           <form>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
                   id="email"
+                  name="email" // CRITICAL: This must match the key in your Server Action
                   type="email"
                   placeholder="m@example.com"
                   required
@@ -51,13 +54,28 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input 
+                  id="password" 
+                  name="password" // CRITICAL: This must match the key in your Server Action
+                  type="password" 
+                  required 
+                />
               </Field>
-              <Field>
-                <Button type="submit">Login</Button>
-                <Button variant="outline" type="button">
+              <Field className="flex flex-col gap-2">
+                {/* 1. Connect the Login button to the login action */}
+                <Button formAction={login} type="submit">
+                  Login
+                </Button>
+                
+                {/* 2. Connect the Sign up button to the signup action */}
+                <Button formAction={signup} variant="outline" type="submit">
+                  Sign up
+                </Button>
+
+                <Button variant="ghost" type="button">
                   Login with Google
                 </Button>
+                
                 <FieldDescription className="text-center">
                   Don&apos;t have an account? <Link href="/signup">Sign up</Link>
                 </FieldDescription>

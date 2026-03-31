@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
+// Import your signup action
+import { signup } from "@/app/signup/actions"
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   return (
@@ -25,16 +27,24 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
         </CardDescription>
       </CardHeader>
       <CardContent>
+        {/* The form needs to wrap the fields to collect data */}
         <form>
           <FieldGroup>
             <Field>
-              <FieldLabel htmlFor="name">Full Name</FieldLabel>
-              <Input id="name" type="text" placeholder="John Doe" required />
+              <FieldLabel htmlFor="full_name">Full Name</FieldLabel>
+              <Input 
+                id="full_name" 
+                name="full_name" // Added name
+                type="text" 
+                placeholder="John Doe" 
+                required 
+              />
             </Field>
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
               <Input
                 id="email"
+                name="email" // Added name
                 type="email"
                 placeholder="m@example.com"
                 required
@@ -46,7 +56,12 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
             </Field>
             <Field>
               <FieldLabel htmlFor="password">Password</FieldLabel>
-              <Input id="password" type="password" required />
+              <Input 
+                id="password" 
+                name="password" // Added name
+                type="password" 
+                required 
+              />
               <FieldDescription>
                 Must be at least 8 characters long.
               </FieldDescription>
@@ -55,12 +70,20 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
               <FieldLabel htmlFor="confirm-password">
                 Confirm Password
               </FieldLabel>
-              <Input id="confirm-password" type="password" required />
+              <Input 
+                id="confirm-password" 
+                name="confirm_password" // Added name
+                type="password" 
+                required 
+              />
               <FieldDescription>Please confirm your password.</FieldDescription>
             </Field>
             <FieldGroup>
               <Field>
-                <Button type="submit">Create Account</Button>
+                {/* Connected to signup action */}
+                <Button formAction={signup} type="submit">
+                  Create Account
+                </Button>
                 <Button variant="outline" type="button">
                   Sign up with Google
                 </Button>

@@ -1,13 +1,16 @@
-"use client"
-
 import { AppSidebar } from "@/components/app-sidebar"
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
 
-export default function AppLayout({ children }: { children: React.ReactNode }) {
+export default async function PrivateLayout({ children }: { children: React.ReactNode }) {
   // TODO: replace with real auth logic
-  const userIsLoggedIn = true
-
-  if (!userIsLoggedIn) return <>{children}</>
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.getSession();
+  
+  if (error || !data.session) {
+    redirect('/login');
+  }
 
   return (
     <SidebarProvider>
